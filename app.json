@@ -1,0 +1,17 @@
+{
+    "Name": "codefever",
+    "Version": "1.0.0",
+    "Home": "https://codefever.cn/",
+    "Maintainer": "Yefori yefori.go@gmail.com",
+    "GitUrl": "https://github.com/PGYER/codefever",
+    "DockerfileUrl": "https://github.com/quicklyon/codefever-docker",
+    "DockerfileRepoBranch":"master",
+    "InstallDocUrl": "https://www.qucheng.com/app-install/codefever-install-1.html",
+    "Docker": {
+        "Name": "codefever",
+        "OS": "debian-10",
+        "ImageOS": "webdevops/php-nginx:7.4",
+        "Repo": "https://hub.docker.com/r/easysoft/codefever",
+        "TagUrl": "https://hub.docker.com/r/easysoft/codefever/tags/"
+    }
+}
