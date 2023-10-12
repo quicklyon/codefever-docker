@@ -1,36 +1,39 @@
-version: '2'
+version: '3'
 
 services:
   mysql:
     image: mysql:5.7
     container_name: mysql
-    ports:
-      - '3307:3306'
     volumes:
       - 'db:/var/lib/mysql'
     environment:
       - MYSQL_ROOT_PASSWORD=pass4Quick0n
-      - MYSQL_DATABASE=codefever
     networks:
       - net
+    command: [
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_general_ci',
+        '--max_connections=3000'
+    ]
 
   codefever:
     image: hub.qucheng.com/app/codefever:${TAG:-latest}
     container_name: codefever
     ports:
-      - '8080:80'
+      - '18080:80'
+      - '12222:22'
     volumes:
       - 'data:/data'
     depends_on:
       - mysql
     environment:
-      - MYSQL_HOST=mysql
-      - MYSQL_PORT=3306
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=pass4Quick0n
-      - MYSQL_DB=codefever
       - DEBUG=1
       - IS_CONTAINER=true
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASS=pass4Quick0n
+      - DB_NAME=codefever_community
     networks:
       - net
 
