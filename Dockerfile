@@ -45,27 +45,25 @@ COPY debian/rootfs /
 # Copy codefever source code
 WORKDIR /apps/codefever
 RUN chown www-data.www-data /apps/codefever -R \
-    && mkdir -p /data/www \
-    && ln -s /apps/codefever /data/www \
-    && cd /data/www \
-    && git clone --depth=1 https://github.com/PGYER/codefever.git codefever-community
+    && git clone --depth=1 https://github.com/PGYER/codefever.git /apps/codefever
+RUN cd /apps/codefever/misc \
+    && sed -i "s/\/data\/www\/codefever-community/\/apps\/codefever/" codefever-service-template initailize_container.sh install.sh nginx.conf-template update.sh docker/docker-entrypoint.sh docker/supervisor-codefever-http-gateway.conf docker/supervisor-codefever-modify-authorized-keys.conf docker/vhost.conf-template
 
 # Config
-RUN cd /data/www/codefever-community \
-    && cp misc/docker/vhost.conf-template /opt/docker/etc/nginx/vhost.conf \
-    && cp misc/docker/supervisor-codefever-modify-authorized-keys.conf /opt/docker/etc/supervisor.d/codefever-modify-authorized-keys.conf \
-    && cp misc/docker/supervisor-codefever-http-gateway.conf /opt/docker/etc/supervisor.d/codefever-http-gateway.conf \
-    && cp misc/docker/docker-entrypoint.sh /usr/bin/entrypoint.sh \
-    && cd /data/www/codefever-community/http-gateway \
+RUN cd /apps/codefever/misc/docker \
+    && cp vhost.conf-template /opt/docker/etc/nginx/vhost.conf \
+    && cp supervisor-codefever-modify-authorized-keys.conf /opt/docker/etc/supervisor.d/codefever-modify-authorized-keys.conf \
+    && cp supervisor-codefever-http-gateway.conf /opt/docker/etc/supervisor.d/codefever-http-gateway.conf \
+    && cd /apps/codefever/http-gateway \
     && go get gopkg.in/yaml.v2 \
     && go build main.go \
-    && cd /data/www/codefever-community/ssh-gateway/shell \
+    && cd /apps/codefever/ssh-gateway/shell \
     && go get gopkg.in/yaml.v2 \
     && go build main.go \
     && useradd -rm git \
     && mkdir /usr/local/php/bin \
     && ln -s /usr/local/bin/php /usr/local/php/bin/php \
-    && cd /data/www/codefever-community \
+    && cd /apps/codefever \
     && cp misc/codefever-service-template /etc/init.d/codefever \
     && cp config.template.yaml config.yaml \
     && cp env.template.yaml env.yaml \
@@ -79,12 +77,12 @@ RUN cd /data/www/codefever-community \
     && chown -R git:git misc \
     && chmod +x /opt/docker/etc/supervisor.d/codefever-modify-authorized-keys.conf \
     && chmod +x /opt/docker/etc/supervisor.d/codefever-http-gateway.conf \
-    && cd /data/www/codefever-community/application/libraries/composerlib/ \
+    && cd /apps/codefever/application/libraries/composerlib/ \
     && php ./composer.phar install \
-    && cp /data/www/codefever-community/misc/docker/docker-entrypoint.sh /opt/docker/provision/entrypoint.d/20-codefever.sh
+    && cp /apps/codefever/misc/docker/docker-entrypoint.sh /opt/docker/provision/entrypoint.d/20-codefever.sh
 
 # Cron
-RUN docker-cronjob '* * * * *  sh /data/www/codefever-community/application/backend/codefever_schedule.sh'
+RUN docker-cronjob '* * * * *  sh /apps/codefever/application/backend/codefever_schedule.sh'
 
 EXPOSE 80
 
