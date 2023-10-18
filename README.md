@@ -17,36 +17,27 @@
 
 ## 一、关于 codefever
 
-<!-- 这里写应用的【介绍信息】 -->
-
-<!-- 示例：
-
-[Spug](https://spug.cc/) 面向中小型企业设计的轻量级无 Agent 的自动化运维平台，整合了主机管理、主机批量执行、主机在线终端、文件在线上传下载、应用发布部署、在线任务计划、配置中心、监控、报警等一系列功能。
-
--->
+[CodeFever](https://codefever.cn) 是完全免费开源的 Git 代码托管服务，支持一行命令安装到自己服务器！
 
 ![screenshots](https://raw.githubusercontent.com/quicklyon/codefever-docker/master/.template/screenshot.png)
 
 codefever官网：[https://codefever.cn/](https://codefever.cn/)
 
-<!-- 这里写应用的【附加信息】 -->
+### **功能特性**
 
-<!-- 示例
-
-### 1.1 特性
-
-- 批量执行: 主机命令在线批量执行
-- 在线终端: 主机支持浏览器在线终端登录
-- 文件管理: 主机文件在线上传下载
-- 任务计划: 灵活的在线任务计划
-- 发布部署: 支持自定义发布部署流程
-- 配置中心: 支持 KV、文本、json 等格式的配置
-- 监控中心: 支持站点、端口、进程、自定义等监控
-- 报警中心: 支持短信、邮件、钉钉、微信等报警方式
-- 优雅美观: 基于 Ant Design 的 UI 界面
-- 开源免费: 前后端代码完全开源
-
--->
+- 🆓 **永久免费:** 永久免费提供给大家使用，您无需担心付费
+- ❤️ **完整开源:** 毫无保留的完整开源，无任何编译或加密代码
+- 🥬 **轻量安装:** 极简设计风格，排除重度冗余的多余功能
+- ⚡️ **性能高效:** 速度极快，对服务器资源要求极低，1核CPU/1G内存即可运行
+- ♾️ **无限仓库:** 没有任何仓库数量、使用数量的限制
+- ⌨️ **代码对比:** 支持提交代码的不同版本支持高亮显示对比
+- 🛤️ **分支管理:** 完整支持 Git 原生分支和 Tag，帮助更清晰的管理代码
+- 🙋‍♂️ **合并请求（Merge Request）:** 支持多人协作，让代码版本控制更顺畅
+- 🙅🏻‍♀️ **分支保护:** 分支保护功能让代码提交安全可控，代码 Review 更容易清晰
+- 👥 **多人协作:** 支持多人团队协作，并可以设置每个成员的角色和权限
+- 🔌 **Webhook:** 支持Webhook功能，可轻松和其他系统进行集成
+- 🖥️ **管理后台:** 支持超级管理员后台，可以让团队leader管理所有项目和用户信息
+- 💬 **中英双语:** 原生支持中文和英文两种语言
 
 ## 二、支持的版本(Tag)
 
@@ -97,24 +88,14 @@ services:
 
 ## 五、环境变量
 
-<!-- 这里写应用的【环境变量信息】 -->
-
-<!-- 示例：
-
-| 变量名           | 默认值        | 说明                             |
-| ---------------- | ------------- | -------------------------------- |
-| EASYSOFT_DEBUG   | false         | 是否打开调试信息，默认关闭       |
-| MYSQL_HOST       | 127.0.0.1     | MySQL 主机地址                   |
-| MYSQL_PORT       | 3306          | MySQL 端口                       |
-| MYSQL_DB         | spug          | spug 数据库名称                 |
-| MYSQL_USER       | root          | MySQL 用户名                      |
-| MYSQL_PASSWORD   | pass4Spug     | MySQL 密码                        |
-| REDIS_HOST       | 127.0.0.1     | Redis 服务地址 |
-| REDIS_PORT       | 6379          | Redis 端口 |
-| DEFAULT_ADMIN_USER| admin        | 默认管理员名称             |
-| DEFAULT_ADMIN_PASSWORD | spug.dev | 默认管理员密码 |
-
--->
+| 变量名           | 默认值               | 说明                      |
+| ---------------- | ------------------- | ------------------------- |
+| EASYSOFT_DEBUG   | false               | 是否打开调试信息，默认关闭   |
+| DB_HOST          | 127.0.0.1           | MySQL 主机地址             |
+| DB_PORT          | 3306                | MySQL 端口                 |
+| DB_NAME          | codefever_community | 数据库名称                 |
+| DB_USER          | root                | MySQL 用户名               |
+| DB_PASSWORD      | pass4Quick0n        | MySQL 密码                 |
 
 ## 六、运行
 
@@ -132,13 +113,10 @@ docker-compose logs -f codefever
 
 ```
 
-<!-- 这里写应用的【make命令的备注信息】位于文档最后端 -->
-<!-- 示例
 **说明:**
 
-- 启动成功后，打开浏览器输入 `http://<你的IP>:8080` 访问管理后台
-- 默认用户名：`admin`，默认密码：`spug.dev`
--->
+- 启动成功后，打开浏览器输入 `http://<你的IP>:18080` 访问管理后台
+- 默认用户名：`root@codefever.cn`，默认密码：`123456`
 - [VERSION](https://github.com/quicklyon/codefever-docker/blob/master/VERSION) 文件中详细的定义了Makefile可以操作的版本
 - [docker-compose.yml](https://github.com/quicklyon/codefever-docker/blob/master/docker-compose.yml)
 
