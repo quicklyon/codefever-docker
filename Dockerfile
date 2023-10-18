@@ -79,8 +79,14 @@ RUN cd /apps/codefever/misc/docker \
     && chmod +x /opt/docker/etc/supervisor.d/codefever-http-gateway.conf \
     && cd /apps/codefever/application/libraries/composerlib/ \
     && php ./composer.phar install \
-    && cp /apps/codefever/misc/docker/docker-entrypoint.sh /opt/docker/provision/entrypoint.d/20-codefever.sh
-
+    && cp /usr/bin/init-storage.sh /opt/docker/provision/entrypoint.d/19-init-storage.sh \
+    && cp /apps/codefever/misc/docker/docker-entrypoint.sh /opt/docker/provision/entrypoint.d/20-codefever.sh \
+    && cd /apps/codefever \
+    && mkdir storage-template \
+    && mv git-storage storage-template/git-storage \
+    && mv file-storage storage-template/file-storage \
+    && mv application/logs storage-template/logs
+    
 # Cron
 RUN docker-cronjob '* * * * *  sh /apps/codefever/application/backend/codefever_schedule.sh'
 
