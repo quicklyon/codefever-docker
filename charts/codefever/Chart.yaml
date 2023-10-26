@@ -1,0 +1,33 @@
+annotations:
+  metadata/alias: Codefever
+  metadata/author: PGYER
+  metadata/changelog_url: https://github.com/PGYER/codefever/commits/master
+  metadata/dockerfile_url: https://github.com/quicklyon/codefever-docker
+  metadata/forum_url: https://www.qucheng.com/forum/codefever.html
+  metadata/git_url: https://github.com/PGYER/codefever
+  metadata/hidden: "false"
+  metadata/introduction: 完全免费开源的 Git 代码托管服务。
+  metadata/screenshot_urls: |
+    https://img.qucheng.com/app/c/codefever-screenshot01.png
+  metadata/upgrade_allow_from: 0.0.1
+apiVersion: v2
+appVersion: 1.0.0
+dependencies:
+- name: lib-common
+  repository: https://hub.qucheng.com/chartrepo/library
+  version: 1.*.*
+- condition: mysql.enabled
+  name: mysql
+  repository: https://hub.qucheng.com/chartrepo/library
+  version: 2023.*.*
+description: 完全免费开源的 Git 代码托管服务。
+home: https://codefever.cn/
+icon: https://img.qucheng.com/app/c/codefever-icon.svg
+keywords:
+- devops
+maintainers:
+- email: yefori@luv.ac.cn
+  name: Yefori
+name: codefever
+type: application
+version: 2023.10.2601
