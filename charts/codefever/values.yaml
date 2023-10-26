@@ -1,0 +1,106 @@
+replicas: 1
+
+image:
+  repository: app/codefever
+  tag: "latest"
+  pullPolicy: Always
+
+service:
+  enabled: true
+  type: ClusterIP
+
+ports:
+  - name: ssh
+    protocol: tcp
+    port: 22
+  - name: http
+    protocol: tcp
+    port: 80
+  - name: https
+    protocol: tcp
+    port: 443
+
+probe:
+  readiness:
+    enabled: true
+    type: http
+    methods:
+      http:
+        httpGet:
+          path: /
+          port: http
+
+resources:
+  cpu: 1
+  memory: 2Gi
+
+oversold:
+  cpu: 200m
+  memory: 512Mi
+
+ingress:
+  enabled: false
+  host: "codefever.local"
+  paths:
+    - path: /
+      port: 80
+      type: Prefix
+
+mysql:
+  enabled: true
+  auth:
+    password: pass4Codefever
+    rootPassword: pass4C0def3ver
+    user: codefever
+    port: 3306
+    database: codefever
+
+env:
+  DB_PASS:
+    source: secret
+    key: mysql_password
+    subChartRefs:
+      - when: mysql.enabled
+        name: mysql
+  DB_NAME: "$ref:mysql.auth.database"
+  DB_PORT: "$ref:mysql.auth.port"
+  DB_USER: "$ref:mysql.auth.user"
+  APP_DOMAIN: "$ref:ingress.host"
+  DB_HOST: '{{ include "lib-common.utils.depServiceName.withOverride" (dict "condition" "mysql.enabled" "subchart" "mysql" "default" "$ref:mysql.auth.host" "ctx" $)}}'
+
+secret:
+  data:
+    mysql_password:
+      value: "$ref:mysql.auth.password"
+      length: 20
+      allowOverride: true
+    default_admin_password:
+      value: "$ref:auth.password"
+      length: 20
+      allowOverride: false
+
+configmaps:
+  settings:
+    mode: kv
+    dataTpl: "files/settings.yaml"
+
+envFrom:
+  configmaps:
+    - settings
+
+global:
+  allowOverSold: true
+
+volumes:
+  data:
+    type: pvc
+    enabled: true
+    accessMode: ReadWriteOnce
+    size: 1Gi
+    mounts:
+      - mountPath: /data
+        subPath: ""
+
+mail:
+  enabled: false
+  smtp: {}

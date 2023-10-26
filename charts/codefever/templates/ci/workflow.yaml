@@ -1,0 +1,4 @@
+{{- include "lib-common.values.merge" . -}}
+{{- if and .Component.Values.enabled .Release.IsInstall }}
+{{- include "lib-common.workflow.v2" (list . "lib-common.container.v2") -}}
+{{- end }}
